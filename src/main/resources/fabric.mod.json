@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "witherturnsskeletons",
+  "version": "${version}",
+  "name": "Wither turns Skeletons",
+  "description": "Skeletons that are affected by the Wither effect turn into Wither Skeletons",
+  "authors": [
+    "DaFuqs"
+  ],
+  "contact": {
+    "website": "github.com/DaFuqs",
+    "repo": "github.com/DaFuqs/WitherTurnsSkeletons"
+  },
+  "license": "MIT",
+  "icon": "assets/witherturnsskeletons/textures/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [],
+    "main": [
+      "de.dafuqs.witherturnsskeletons.WitherTurnsSkeletons"
+    ]
+  },
+  "mixins": [
+    "witherturnsskeletons.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "minecraft": ">=1.17.1"
+  }
+}
