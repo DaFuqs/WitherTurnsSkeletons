@@ -24,7 +24,7 @@ public class SkeletonsTurnToWitherMixin {
     public void tick(CallbackInfo ci) {
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
 
-        if (!thisEntity.world.isClient && thisEntity.isAlive() && !thisEntity.isAiDisabled()) {
+        if (!thisEntity.getWorld().isClient && thisEntity.isAlive() && !thisEntity.isAiDisabled()) {
             if (this.isConvertingToWitherSkeleton()) {
                 --witherSkeletonConversionTime;
                 if (witherSkeletonConversionTime < 0) {
@@ -65,7 +65,7 @@ public class SkeletonsTurnToWitherMixin {
 
         thisEntity.convertTo(EntityType.WITHER_SKELETON, true);
         if (!thisEntity.isSilent()) {
-            thisEntity.world.syncWorldEvent(null, 1048, thisEntity.getBlockPos(), 0);
+            thisEntity.getWorld().syncWorldEvent(null, 1048, thisEntity.getBlockPos(), 0);
         }
     }
 
