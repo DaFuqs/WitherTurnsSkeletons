@@ -8,16 +8,18 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.SkeletonEntity;
 import net.minecraft.nbt.NbtCompound;
-import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SkeletonEntity.class)
-public class SkeletonsTurnToWitherMixin {
+public class SkeletonsTurnToWitherSkeletonsMixin {
 
+    @Unique
     private static final TrackedData<Boolean> CONVERTING_TO_WITHER_SKELETON = DataTracker.registerData(SkeletonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
     private int witherSkeletonConversionTime;
 
     @Inject(method = "tick()V", at = @At("TAIL"))
@@ -41,7 +43,8 @@ public class SkeletonsTurnToWitherMixin {
 
     @Inject(method = "initDataTracker()V", at = @At("TAIL"))
     protected void initDataTracker(CallbackInfo ci) {
-        ((EntityInvoker) this).getDataTracker().startTracking(CONVERTING_TO_WITHER_SKELETON, false);
+        SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
+        thisEntity.getDataTracker().startTracking(CONVERTING_TO_WITHER_SKELETON, false);
     }
 
     @Inject(method = "isShaking()Z", at = @At("HEAD"), cancellable = true)
@@ -51,15 +54,20 @@ public class SkeletonsTurnToWitherMixin {
         }
     }
 
+    @Unique
     public boolean isConvertingToWitherSkeleton() {
-        return ((EntityInvoker) this).getDataTracker().get(CONVERTING_TO_WITHER_SKELETON);
+        SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
+        return thisEntity.getDataTracker().get(CONVERTING_TO_WITHER_SKELETON);
     }
 
+    @Unique
     public void setWitherSkeletonConversionTime(int time) {
         this.witherSkeletonConversionTime = time;
-        ((EntityInvoker) this).getDataTracker().set(CONVERTING_TO_WITHER_SKELETON, true);
+        SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
+        thisEntity.getDataTracker().set(CONVERTING_TO_WITHER_SKELETON, true);
     }
 
+    @Unique
     private void convertToWitherSkeleton() {
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
 

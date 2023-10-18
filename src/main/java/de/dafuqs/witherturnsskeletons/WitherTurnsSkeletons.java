@@ -18,7 +18,6 @@ public class WitherTurnsSkeletons implements ModInitializer {
     
     @Override
     public void onInitialize() {
-        log(Level.INFO, "Starting up...");
         log(Level.INFO, "Startup Finished!");
     }
 

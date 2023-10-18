@@ -1,11 +1,9 @@
 {
   "required": true,
   "package": "de.dafuqs.witherturnsskeletons.mixin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "EntityInvoker",
-    "SkeletonEntityInvoker",
-    "SkeletonsTurnToWitherMixin"
+    "SkeletonsTurnToWitherSkeletonsMixin"
   ],
   "client": [],
   "injectors": {
