@@ -27,48 +27,47 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
 
         if (!thisEntity.getWorld().isClient && thisEntity.isAlive() && !thisEntity.isAiDisabled()) {
-            if (this.isConvertingToWitherSkeleton()) {
+            if (this.witherturnsskeletons$isConvertingToWitherSkeleton()) {
                 --witherSkeletonConversionTime;
                 if (witherSkeletonConversionTime < 0) {
-                    convertToWitherSkeleton();
+                    witherturnsskeletons$convertToWitherSkeleton();
                 }
             } else {
                 StatusEffectInstance statusEffectInstance = thisEntity.getStatusEffect(StatusEffects.WITHER);
                 if(statusEffectInstance != null) {
-                    this.setWitherSkeletonConversionTime(100);
+                    this.witherturnsskeletons$setWitherSkeletonConversionTime(100);
                 }
             }
         }
     }
 
-    @Inject(method = "initDataTracker()V", at = @At("TAIL"))
-    protected void initDataTracker(CallbackInfo ci) {
-        SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
-        thisEntity.getDataTracker().startTracking(CONVERTING_TO_WITHER_SKELETON, false);
+    @Inject(method = "initDataTracker(Lnet/minecraft/entity/data/DataTracker$Builder;)V", at = @At("TAIL"))
+    protected void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(CONVERTING_TO_WITHER_SKELETON, false);
     }
 
     @Inject(method = "isShaking()Z", at = @At("HEAD"), cancellable = true)
     public void isShaking(CallbackInfoReturnable<Boolean> cir) {
-        if(isConvertingToWitherSkeleton()) {
+        if(witherturnsskeletons$isConvertingToWitherSkeleton()) {
             cir.setReturnValue(true);
         }
     }
 
     @Unique
-    public boolean isConvertingToWitherSkeleton() {
+    public boolean witherturnsskeletons$isConvertingToWitherSkeleton() {
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
         return thisEntity.getDataTracker().get(CONVERTING_TO_WITHER_SKELETON);
     }
 
     @Unique
-    public void setWitherSkeletonConversionTime(int time) {
+    public void witherturnsskeletons$setWitherSkeletonConversionTime(int time) {
         this.witherSkeletonConversionTime = time;
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
         thisEntity.getDataTracker().set(CONVERTING_TO_WITHER_SKELETON, true);
     }
 
     @Unique
-    private void convertToWitherSkeleton() {
+    private void witherturnsskeletons$convertToWitherSkeleton() {
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
 
         thisEntity.convertTo(EntityType.WITHER_SKELETON, true);
@@ -79,13 +78,13 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
 
     @Inject(method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("TAIL"))
     public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putInt("WitherSkeletonConversionTime", this.isConvertingToWitherSkeleton() ? this.witherSkeletonConversionTime : -1);
+        nbt.putInt("WitherSkeletonConversionTime", this.witherturnsskeletons$isConvertingToWitherSkeleton() ? this.witherSkeletonConversionTime : -1);
     }
 
     @Inject(method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
     public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
         if (nbt.contains("WitherSkeletonConversionTime", 99) && nbt.getInt("WitherSkeletonConversionTime") > -1) {
-            this.setWitherSkeletonConversionTime(nbt.getInt("WitherSkeletonConversionTime"));
+            this.witherturnsskeletons$setWitherSkeletonConversionTime(nbt.getInt("WitherSkeletonConversionTime"));
         }
     }
 
