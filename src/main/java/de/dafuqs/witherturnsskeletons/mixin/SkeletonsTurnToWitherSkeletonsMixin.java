@@ -1,18 +1,14 @@
 package de.dafuqs.witherturnsskeletons.mixin;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.SkeletonEntity;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.entity.*;
+import net.minecraft.entity.conversion.*;
+import net.minecraft.entity.data.*;
+import net.minecraft.entity.effect.*;
+import net.minecraft.entity.mob.*;
+import net.minecraft.nbt.*;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(SkeletonEntity.class)
 public class SkeletonsTurnToWitherSkeletonsMixin {
@@ -69,11 +65,11 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
     @Unique
     private void witherturnsskeletons$convertToWitherSkeleton() {
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
-
-        thisEntity.convertTo(EntityType.WITHER_SKELETON, true);
-        if (!thisEntity.isSilent()) {
-            thisEntity.getWorld().syncWorldEvent(null, 1048, thisEntity.getBlockPos(), 0);
-        }
+        thisEntity.convertTo(EntityType.WITHER_SKELETON, EntityConversionContext.create(thisEntity, true, true), (stray) -> {
+            if (!thisEntity.isSilent()) {
+                thisEntity.getWorld().syncWorldEvent(null, 1048, thisEntity.getBlockPos(), 0);
+            }
+        });
     }
 
     @Inject(method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("TAIL"))
