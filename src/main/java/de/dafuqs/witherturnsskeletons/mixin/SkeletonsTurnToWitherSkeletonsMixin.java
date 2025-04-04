@@ -6,6 +6,7 @@ import net.minecraft.entity.data.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.nbt.*;
+import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
@@ -67,7 +68,7 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
         SkeletonEntity thisEntity = (SkeletonEntity)(Object) this;
         thisEntity.convertTo(EntityType.WITHER_SKELETON, EntityConversionContext.create(thisEntity, true, true), (stray) -> {
             if (!thisEntity.isSilent()) {
-                thisEntity.getWorld().syncWorldEvent(null, 1048, thisEntity.getBlockPos(), 0);
+                thisEntity.getWorld().syncWorldEvent(null, WorldEvents.SKELETON_CONVERTS_TO_STRAY, thisEntity.getBlockPos(), 0);
             }
         });
     }
@@ -79,8 +80,9 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
 
     @Inject(method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
     public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (nbt.contains("WitherSkeletonConversionTime", 99) && nbt.getInt("WitherSkeletonConversionTime") > -1) {
-            this.witherturnsskeletons$setWitherSkeletonConversionTime(nbt.getInt("WitherSkeletonConversionTime"));
+        int witherConversionTime = nbt.getInt("WitherSkeletonConversionTime", -1);
+        if (witherConversionTime > -1) {
+            this.witherturnsskeletons$setWitherSkeletonConversionTime(witherConversionTime);
         }
     }
 
