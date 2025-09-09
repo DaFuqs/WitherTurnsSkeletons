@@ -6,7 +6,7 @@ import net.minecraft.entity.conversion.*;
 import net.minecraft.entity.data.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.mob.*;
-import net.minecraft.nbt.*;
+import net.minecraft.storage.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
@@ -71,14 +71,14 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
 		});
 	}
 	
-	@Inject(method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("TAIL"))
-	public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-		nbt.putInt("WitherSkeletonConversionTime", this.witherturnsskeletons$isConvertingToWitherSkeleton() ? this.witherSkeletonConversionTime : -1);
+	@Inject(method = "writeCustomData(Lnet/minecraft/storage/WriteView;)V", at = @At("HEAD"))
+	public void writeCustomDataToNbt(WriteView view, CallbackInfo ci) {
+		view.putInt("WitherSkeletonConversionTime", this.witherturnsskeletons$isConvertingToWitherSkeleton() ? this.witherSkeletonConversionTime : -1);
 	}
 	
-	@Inject(method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("HEAD"))
-	public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-		int witherConversionTime = nbt.getInt("WitherSkeletonConversionTime", -1);
+	@Inject(method = "readCustomData(Lnet/minecraft/storage/ReadView;)V", at = @At("HEAD"))
+	public void readCustomDataFromNbt(ReadView view, CallbackInfo ci) {
+		int witherConversionTime = view.getInt("WitherSkeletonConversionTime", -1);
 		if (witherConversionTime > -1) {
 			this.witherturnsskeletons$setWitherSkeletonConversionTime(witherConversionTime);
 		}
