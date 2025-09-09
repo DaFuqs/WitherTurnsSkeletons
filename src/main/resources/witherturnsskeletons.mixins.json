@@ -3,7 +3,8 @@
   "package": "de.dafuqs.witherturnsskeletons.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "SkeletonsTurnToWitherSkeletonsMixin"
+    "SkeletonsTurnToWitherSkeletonsMixin",
+    "WitherStatusEffectMixin"
   ],
   "client": [],
   "injectors": {
