@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
 }
 
@@ -59,6 +59,15 @@ publishing {
         }
     }
 
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
+        maven {
+            name "sapphoCompany"
+            url = "https://maven.is-immensely.gay/releases"
+            credentials {
+                username = "dafuqs"
+                password = System.getenv("MAVEN_PASS")
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
 	public void tick(CallbackInfo ci) {
 		SkeletonEntity thisEntity = (SkeletonEntity) (Object) this;
 		
-		if (!thisEntity.getWorld().isClient && thisEntity.isAlive() && !thisEntity.isAiDisabled()) {
+		if (!thisEntity.getEntityWorld().isClient() && thisEntity.isAlive() && !thisEntity.isAiDisabled()) {
 			if (this.witherturnsskeletons$isConvertingToWitherSkeleton()) {
 				--witherSkeletonConversionTime;
 				if (witherSkeletonConversionTime < 0) {
