@@ -1,9 +1,10 @@
 package de.dafuqs.witherturnsskeletons;
 
 import net.fabricmc.api.*;
-import net.minecraft.registry.*;
-import net.minecraft.sound.*;
-import net.minecraft.util.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.resources.*;
+import net.minecraft.sounds.*;
 import org.apache.logging.log4j.*;
 
 
@@ -20,8 +21,8 @@ public class WitherTurnsSkeletons implements ModInitializer {
     }
     
     private static SoundEvent registerSoundEvent(String name) {
-        Identifier identifier = Identifier.of(MOD_ID, name);
-        return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
+        Identifier identifier = Identifier.fromNamespaceAndPath(MOD_ID, name);
+        return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
     }
 
 }
