@@ -8,8 +8,9 @@
     "DaFuqs"
   ],
   "contact": {
-    "website": "github.com/DaFuqs",
-    "repo": "github.com/DaFuqs/WitherTurnsSkeletons"
+    "website": "https://github.com/DaFuqs",
+    "issues": "https://github.com/DaFuqs/WitherTurnsSkeletons/issues",
+    "repo": "https://github.com/DaFuqs/WitherTurnsSkeletons"
   },
   "license": "MIT",
   "icon": "assets/witherturnsskeletons/textures/icon.png",
