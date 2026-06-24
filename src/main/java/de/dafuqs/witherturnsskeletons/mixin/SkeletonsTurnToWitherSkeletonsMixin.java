@@ -65,7 +65,7 @@ public class SkeletonsTurnToWitherSkeletonsMixin {
 	@Unique
 	private void witherturnsskeletons$convertToWitherSkeleton() {
 		Skeleton thisEntity = (Skeleton) (Object) this;
-		thisEntity.convertTo(EntityType.WITHER_SKELETON, ConversionParams.single(thisEntity, true, true), (witherSkeleton) -> {
+		thisEntity.convertTo(EntityTypes.WITHER_SKELETON, ConversionParams.single(thisEntity, true, true), (witherSkeleton) -> {
 			witherSkeleton.makeSound(WitherTurnsSkeletons.CONVERTING_SOUND);
 		});
 	}
