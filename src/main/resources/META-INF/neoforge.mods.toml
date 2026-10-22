@@ -6,7 +6,7 @@ modId = "${mod_id}"
 version = "${mod_version}"
 displayName = "${mod_name}"
 authors = "${mod_authors}"
-logoFile = "assets/witherturnsskeletons/icon.png"
+iconFile = "assets/witherturnsskeletons/icon.png"
 description = '''${mod_description}'''
 displayURL = "${display_url}"
 
